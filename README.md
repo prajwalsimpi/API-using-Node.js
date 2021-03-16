@@ -43,3 +43,6 @@ API: Get all the booked calls
 
 
 __Use postman to observe the JSON responses and send JSON requests__
+
+
+***Look into the app.js file for dummy data (userData, bookingData, advisorData) for testing***
