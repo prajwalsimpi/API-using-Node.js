@@ -23,7 +23,7 @@ API: Log in as a user
 --- /user/login/
 
 API: Get the list of advisors
---- /user/<user-id>/advisor
+--- /user/<-user-id->/advisor
     ex : /user/Tony/advisor
   
 API: Can book call with an advisor
