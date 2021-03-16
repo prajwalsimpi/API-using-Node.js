@@ -5,6 +5,8 @@ Backend API application created using node
 **Accepts and Responds JSON requests**
 
 Run the app using the command 
+
+__npm init__
 __nodemon app__
 
 
@@ -24,15 +26,18 @@ API: Log in as a user
 
 API: Get the list of advisors
 --- /user/<-user-id->/advisor
+
     ex : /user/Tony/advisor
   
 API: Can book call with an advisor
---- /user/<user-id>/advisor/<advisor-id>/
+--- /user/<-user-id->/advisor/<-advisor-id->/
+
     ex : /user/Tony/advisor/Sam/
   
 API: Get all the booked calls
---- /user/<user-id>/advisor/booking/
+--- /user/<-user-id->/advisor/booking/
+
     ex : /user/Tony/advisor/booking/
 
 
-___Use postman to observe the JSON responses and send JSON requests__
+__Use postman to observe the JSON responses and send JSON requests__
