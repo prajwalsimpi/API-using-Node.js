@@ -70,6 +70,10 @@ app.post('/admin/advisor/', (req,res) =>{
     const advisorName = req.body.advisorname;
     const advisorPhotoUrl = req.body.advisorphotourl;
     if(advisorName && advisorPhotoUrl){
+        const advisorid = advisorName.replace(/ +/g, "").slice(0,4);
+        let newAdvisor = {advisorName : advisorName, advisorPhotourl: advisorPhotoUrl, advisorId: advisorid}
+        advisorData.push(newAdvisor);
+        console.log(advisorData);
         res.sendStatus(200);
     }
     else{
@@ -95,13 +99,14 @@ app.post('/user/register/', (req,res) =>{
     const userName = req.body.username;
     if (userName && userEmail && userPassword)
     {
-        let userId = userName.replace(/ +/g, "");
+        let userId = userName.replace(/ +/g, "").slice(0,4);
         let userString = { userid : userId, username : userName, useremail : userEmail, userpassword: userPassword }
-        userData.push(userString);        
+        userData.push(userString);
+        console.log(userData);        
         const user = { name : userId }
         
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-        res.status(200).json({ accessToken : accessToken , userId: userId})
+        res.status(200).json({ accessToken : accessToken, userId: userId})
     }
     else
     {
@@ -148,26 +153,36 @@ app.get('/user/:userId/advisor', (req,res) =>{
 app.post('/user/:userId/advisor/:advisorId/', (req,res) =>{
     const bookingDateTime = new Date(req.body.bookingTime);
     const bookingTime = bookingDateTime.toLocaleTimeString()
+    console.log(bookingTime);
     const userId = req.params['userId'];
     const advisorId = req.params['advisorId'];
-    if(bookingTime)
+    if(bookingTime === 'Invalid Date')
+    {
+        res.send(400);
+    }
+    else
     {
         let matchedadvisorName ='';
         let matchedadvisorPhoto = '';
+        let matchFound = false;
         advisorData.forEach((elem) => {
             if(elem.advisorId === advisorId)
             {
+                matchFound = true;
                 matchedadvisorName = elem.advisorName;
                 matchedadvisorPhoto = elem.advisorPhotourl;
                 let bookingString = '{ "bookingId" : "' + (Math.floor((Math.random() * 100) + 1)) + '" , "userId" : "'+ userId +'" , "bookingTime" : "' + bookingTime + '" , "advisorId" : "' + advisorId +'" , "advisorName" : "' + matchedadvisorName + '" , "advisorPhotoUrl" : "' + matchedadvisorPhoto + '" }';
                 bookingString = JSON.parse(bookingString);
                 bookingData.push(bookingString);
                 console.log(bookingData);
-                res.send(200);
+                res.sendStatus(200);
             }
         })
+        if(!matchFound){
+            res.sendStatus(400);
+        }
     }
-    res.sendStatus(404);
+
 });
 
 app.get('/user/:userId/advisor/booking/', (req,res) =>{
