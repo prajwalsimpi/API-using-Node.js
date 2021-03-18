@@ -1,6 +1,4 @@
-# Nurturelabs-Backend-Intern-Assignments
-Assignment for my internship application 
-Backend API application created using node 
+# Backend API application created using node 
 
 **Accepts and Responds JSON requests**
 
@@ -46,3 +44,4 @@ __Use postman to observe the JSON responses and send JSON requests__
 
 
 ***Look into the app.js file for dummy data (userData, bookingData, advisorData) for testing***
+Postman Collection : https://www.getpostman.com/collections/c2515063be25afe8a453
